@@ -48,7 +48,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        data["contents"][0]["parts"][0]["text"] = "Hello! Respond in English clearly and do not be verbose. OK?"
+        data["contents"][0]["parts"][0]["text"] = "Hallo. Antworte ausführlich in Deutsch. OK?"
         response = requests.post(url, json=data, headers=headers)
         if response.status_code == 200:
             response_data = response.json()
@@ -56,7 +56,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
                 .get("content", {})
                 .get("parts", [{}])[0]
                 .get("text", "Text not found"))
-            speak_output = "Hello, I'm your Gemini Chat Bot. " + text + " How can I help you?"
+            speak_output = "Hallo, Ich bin dein Gemini Chat Bot. " + text + " Wie kann ich dir helfen?"
             response_text = {
                 "role": "model",
                 "parts": [{
@@ -107,12 +107,12 @@ class ChatIntentHandler(AbstractRequestHandler):
             }
             data["contents"].append(response_text)
         else:
-            speak_output = "I did not receive a response to your request"
+            speak_output = "Ich habe keine Antwort erhalten."
 
         return (
             handler_input.response_builder
                 .speak(speak_output)
-                .ask("Any other questions?")
+                .ask("Noch irgendwelche Fragen?")
                 .response
         )
 
@@ -126,7 +126,7 @@ class CancelOrStopIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speak_output = "Goodbye!"
+        speak_output = "Auf Wiedersehen!"
 
         return (
             handler_input.response_builder
